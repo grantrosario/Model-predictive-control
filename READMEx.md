@@ -40,12 +40,15 @@ Self-Driving Car Engineer Nanodegree Program
        ```
        This error has been resolved by updrading ipopt with
        ```brew upgrade ipopt --with-openblas```
-       per this [forum post](https://discussions.udacity.com/t/incorrect-checksum-for-freed-object/313433/19).
-  * Linux
-    * You will need a version of Ipopt 3.12.1 or higher. The version available through `apt-get` is 3.11.x. If you can get that version to work great but if not there's a script `install_ipopt.sh` that will install Ipopt. You just need to download the source from the Ipopt [releases page](https://www.coin-or.org/download/source/Ipopt/).
-    * Then call `install_ipopt.sh` with the source directory as the first argument, ex: `sudo bash install_ipopt.sh Ipopt-3.12.1`. 
+       per this [forum post](https://discussions.udacity.com/t/incorrect-checksum-for-freed-object/313433/19).  
+       
+   * Linux:
+      * You will need a version of Ipopt 3.12.1 or higher. The version available through `apt-get` is 3.11.x. If you can get that version to work great but if not there's a script `install_ipopt.sh` that will install Ipopt. You just need to download the source from the Ipopt [releases page](https://www.coin-or.org/download/source/Ipopt/).
+      * Then call `install_ipopt.sh` with the source directory as the first argument, ex: `sudo bash install_ipopt.sh Ipopt-3.12.1`. 
   * Windows: TODO. If you can use the Linux subsystem and follow the Linux instructions.
-* [CppAD](https://www.coin-or.org/CppAD/)
+    
+* [CppAD](https://www.coin-or.org/CppAD/)  
+  
   * Mac: `brew install cppad`
   * Linux `sudo apt-get install cppad` or equivalent.
   * Windows: TODO. If you can use the Linux subsystem and follow the Linux instructions.
