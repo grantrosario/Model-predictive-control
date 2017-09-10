@@ -1,4 +1,72 @@
 # CarND-Controls-MPC
+
+## Data Manipulation
+In order to begin we must alter the data so it is compatible with the controller.  
+  
+  * Convert the coordinates to vehicle coordinates to prevent staright lines from causing issues
+  * Take the 100ms latency into account and re-evaluate the state
+ 
+We can then fit a 3rd order polynomial using this data
+
+## Model
+This model is based on Model Predictive Control and with the data now ready, we can begin forming it.
+
+Given a reference trajectory, we use the Ipopt optimizer to achieve a lowest defined cost function value and optimize the steering and throttling.
+
+The state is:  
+  
+  * Vehicle position (x, y)
+  * Heading of the vehicle (psi)
+  * Velocity of the vehicle (v)
+  * Cross track error (cte)
+  * Heading error (epsi)
+
+Actuators are the steering and throttle parameters sent to the car control as the model output. Updates are performed each moment with latency of 100ms.
+
+## Hyperparameters
+Hyperparameters were chosen like this:
+
+### Weights
+<pre>
+#define W_CTE           (1000.0)
+#define W_EPSI          (1000.0)
+#define W_V             (0.01)
+#define W_STEER         (1.0)
+#define W_THROTTLE      (1.0)  
+#define W_STEER_DIFF    (1.0)
+#define W_THROTTLE_DIFF (1.0)
+</pre>
+
+### Reference values
+<pre>
+#define REF_CTE         (0.0)
+#define REF_EPSI        (0.0)
+#define REF_V           (200.0)
+</pre>
+
+### MPC values
+<pre>
+#define N               (10)
+#define DT              (0.10)
+#define NUM_VARS        (6)
+</pre>
+
+1. I tried a larger value of N (25) but the improvements were negligable.
+2. I also tried a smaller value of DT (0.05) but this caused the vehicle to behave extremely erratically
+
+## Constraint Equation
+Used these equations for the model:
+<pre>
+const auto dMultiplier = (steer0 / LF);
+fg[2 + X_START + i] = x1 - (x0 + (v0 * CppAD::cos(psi0) * DT));
+fg[2 + Y_START + i] = y1 - (y0 + (v0 * CppAD::sin(psi0) * DT));
+fg[2 + PSI_START + i] = psi1 - (psi0 - (v0 * dMultiplier * DT));
+fg[2 + V_START + i] = v1 - (v0 + (throttle0 * DT));
+fg[2 + CTE_START + i] = cte1 - ((f0 - y0) + (v0 * CppAD::sin(epsi0) * DT));
+fg[2 + EPSI_START + i] = epsi1 - ((psi0 - psides0) - (v0 * dMultiplier * DT));
+</pre>
+
+# Original README
 Self-Driving Car Engineer Nanodegree Program
 
 ---

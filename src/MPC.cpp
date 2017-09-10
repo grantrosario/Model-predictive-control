@@ -61,7 +61,6 @@ public:
   
   /* ==================== DATA ===================== */
   /*
-   /*!
    * Fitted polynomial coefficients
    */
   Eigen::VectorXd vCoeffs;
